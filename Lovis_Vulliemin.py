@@ -1,4 +1,5 @@
 
+
 def ga_solve(file=None, gui=True, maxtime=0):
     distance = 0;
 
@@ -10,3 +11,6 @@ def ga_solve(file=None, gui=True, maxtime=0):
 
 def use_gui():
     pass
+	
+if __name__ == '__main__':
+	print("main")
