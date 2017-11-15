@@ -3,13 +3,6 @@ import pygame
 
 from city import City
 
-class Ville(object):
-
-    def __init__(self):
-        self.x = 0
-        self.y = 0
-
-
 def ga_solve(file=None, gui=True, maxtime=0):
     distance = 0
 

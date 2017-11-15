@@ -1,7 +1,6 @@
 #!/usr/bin/python2.7
 # -*- coding: utf-8 -*-
 
-
 class City:
     def __init__(self, id, x, y):
         self.id = id
