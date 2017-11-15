@@ -1,3 +1,12 @@
+# -coding: UTF-8
+import pygame
+
+
+class Ville(object):
+
+    def __init__(self):
+        self.x = 0
+        self.y = 0
 
 
 def ga_solve(file=None, gui=True, maxtime=0):
@@ -9,8 +18,10 @@ def ga_solve(file=None, gui=True, maxtime=0):
     # Return total distance, for each files?
     return distance
 
+
 def use_gui():
     pass
-	
+
+
 if __name__ == '__main__':
-	print("main")
+    print("main")
