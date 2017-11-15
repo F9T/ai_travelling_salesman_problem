@@ -1,0 +1,9 @@
+WP1 : Acquisition des données
+WP2 : Algo génétique : Généralité
+						- Conditions d'arrêt
+						- Fitness
+						- Sélection
+WP3 : Algo génétique : opérations génétique
+						- Croisement
+						- Mutation
+WP4 : Validation - Test - Livraison
