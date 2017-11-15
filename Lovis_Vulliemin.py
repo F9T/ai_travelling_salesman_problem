@@ -1,10 +1,7 @@
-<<<<<<< .mine
 # -coding: UTF-8
 import pygame
-=======
-from city import City
 
->>>>>>> .theirs
+from city import City
 
 class Ville(object):
 
@@ -32,23 +29,6 @@ def ga_solve(file=None, gui=True, maxtime=0):
 
 def use_gui():
     pass
-<<<<<<< .mine
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-=======
 
 def use_file(path):
     cities = []
@@ -64,10 +44,6 @@ def use_file(path):
     for city in cities:
         print(city)
 
->>>>>>> .theirs
 if __name__ == '__main__':
-<<<<<<< .mine
-    print("main")
-=======
 	ga_solve("data\pb005.txt", False, 100)
->>>>>>> .theirs
+
