@@ -20,7 +20,7 @@ Python 3.5 Ready, Romain Claret
 # Ces modules doivent être dans le PYTHONPATH; p.ex. dans le répertoire courant
 
 modules = (
-	"Claret_Visinand",
+	"Lovis_Vulliemin",
 	# Éventuellement d'autres modules pour comparer plusieurs versions...
 )
 
