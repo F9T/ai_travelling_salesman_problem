@@ -2,15 +2,17 @@
 import pygame
 
 from city import City
+from gui import Gui
 
 def ga_solve(file=None, gui=True, maxtime=0):
     distance = 0
 
+    cities = []
+    if file is not None:
+        cities = use_file(file)
     #Data acquisition
     if(gui):
-        use_gui()
-    else:
-        use_file(file)
+        use_gui(cities)
 
     #TODO algo genetic
 
@@ -20,8 +22,9 @@ def ga_solve(file=None, gui=True, maxtime=0):
     return distance
 
 
-def use_gui():
-    pass
+def use_gui(cities):
+    gui = Gui()
+    gui.show(cities)
 
 def use_file(path):
     cities = []
@@ -36,7 +39,8 @@ def use_file(path):
     print("Readed datas :")
     for city in cities:
         print(city)
+    return cities
 
 if __name__ == '__main__':
-	ga_solve("data\pb005.txt", False, 100)
+	ga_solve("data\pb005.txt", True, 100)
 
