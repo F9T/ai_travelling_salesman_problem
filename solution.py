@@ -1,4 +1,3 @@
-#!/usr/bin/python2.7
 # -*- coding: utf-8 -*-
 
 import math
@@ -17,8 +16,8 @@ class Solution:
     def __str__(self):
         text = "Cities : ["
         for city in self.path_cities:
-            text += city.id
-        text += "] Distance : " + self.total_distance
+            text += city.id +" "
+        text += "] Distance : " + str(self.total_distance)
         return str(text)
 
     def __eq__(self, other):

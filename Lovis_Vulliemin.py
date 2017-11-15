@@ -1,6 +1,7 @@
 # -coding: UTF-8
 import pygame
 
+from voyager import Voyager
 from city import City
 from gui import Gui
 
@@ -42,5 +43,5 @@ def use_file(path):
     return cities
 
 if __name__ == '__main__':
-	ga_solve("data\pb005.txt", True, 100)
+	ga_solve("data\pb005.txt", False, 100)
 
