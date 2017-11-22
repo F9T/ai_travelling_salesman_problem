@@ -1,25 +1,42 @@
 # -coding: UTF-8
 import pygame
+import datetime
 
 from voyager import Voyager
 from city import City
 from gui import Gui
 
-def ga_solve(file=None, gui=True, maxtime=0):
+def ga_solve(file=None, gui=True, maxtime=5):
     distance = 0
-
     cities = []
+
+    #Data acquisition
     if file is not None:
         cities = use_file(file)
-    #Data acquisition
+
     if(gui):
         use_gui(cities)
 
-    #TODO algo genetic
+    voyager = Voyager(cities)       #This is the problem holder
+    print("Generation 0 :\n" + str(voyager))
 
-    #TODO get distance
+    #Genetical algo
+    i = 1
+    begin_time = datetime.datetime.now()
+    elapsed_time = 0
 
-    # Return total distance
+    while(elapsed_time < maxtime):
+        print("Generation "+str(i)+" :\n" +str(voyager))
+
+        voyager.apply_genetical()
+
+        elapsed_time = datetime.datetime.now().second - begin_time.second
+        print("Elapsed time :" + str(elapsed_time)+"\n")
+
+        i += 1
+
+
+    #TODO get best distance and return
     return distance
 
 
@@ -40,8 +57,9 @@ def use_file(path):
     print("Readed datas :")
     for city in cities:
         print(city)
+
     return cities
 
 if __name__ == '__main__':
-	ga_solve("data\pb005.txt", False, 100)
+	ga_solve("data\pb005.txt", False, 5)
 
