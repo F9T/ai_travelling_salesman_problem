@@ -29,13 +29,7 @@ class Solution:
         pass    #TODO greater and lesser to compare for max
 
     def mutate(self):
-        #Select 2 different randoms
-        """rand1 = random.randint(0, len(self.path_cities))
-        rand2 = rand1
-        while(rand2 == rand1):
-            rand2 = random.randint(0, len(self.path_cities))"""
-
-        #V2
+        #Swap 2 values
         rands = random.sample(range(len(self.path_cities)), 2)#Check if 0-4
 
         self[rands[0]], self[rands[1]] = self[rands[1]], self[rands[0]]

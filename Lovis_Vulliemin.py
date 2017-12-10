@@ -6,7 +6,10 @@ from voyager import Voyager
 from city import City
 from gui import Gui
 
-def ga_solve(file=None, gui=True, maxtime=5):
+STAGNATION_TOLERANCE = 100
+MAX_TIME_ELAPSED = 10
+
+def ga_solve(file=None, gui=True, maxtime=MAX_TIME_ELAPSED):
     distance = 0
     cities = []
 
@@ -25,8 +28,9 @@ def ga_solve(file=None, gui=True, maxtime=5):
     i = 1
     begin_time = datetime.datetime.now()
     elapsed_time = 0
+    stagnation = 0
 
-    while(elapsed_time < maxtime and elapsed_time >= 0):
+    while(elapsed_time < maxtime and elapsed_time >= 0 and stagnation < STAGNATION_TOLERANCE):
         print("Generation "+str(i)+" :\n" +str(voyager))
 
         #Apply genetical algo
@@ -69,4 +73,4 @@ def load_file(path):
     return cities
 
 if __name__ == '__main__':
-	ga_solve("data\pb010.txt", True, 5)
+	ga_solve("data\pb005.txt", True, 5)
