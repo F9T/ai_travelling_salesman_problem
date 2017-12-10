@@ -198,32 +198,25 @@ class Voyager:
 
     def cross_over_solutions(self):
         while len(self.solutions) < POPULATION_SIZE:
-            # Choose parents and form couples
+            #Choose parents and form couples
             couple = random.sample(self.solutions, 2)
 
-            # Choose segment points
-            segment_points = (random.sample(range(len(self.problem) + 1), 2))
+            #Choose segment points
+            segment_points = (random.sample(range(len(self.problem)+1), 2))
             segment_points.sort()
 
-            # Create child based on 1st parent
+            #Create child based on 1st parent
             child = deepcopy(couple[0])
 
-            # Replace inner segments cities
-            missings = []
-            for i in range(segment_points[0], segment_points[1]):
-                # check if doubled cities outter of segment_points
-                if couple[1][i] in child[:segment_points[0]] or couple[1][i] in child[segment_points[1]:]:
-                    pos_double = child.path_cities.index(couple[1][i])
-                    missings.append(child[pos_double])
-                    child[pos_double] = City(-1, 0, 0)
+            #Replace inner segments cities
+            inner_range = range(segment_points[0], segment_points[1])
+            for i in inner_range:
+                child[i] = couple[1][i]                     #Place 2nd parent value
 
-                child[i] = couple[1][i]  # Place 2nd parent value
-
-            # for i in range(segment_points[0])+range(segment_points[1], len(child.path_cities)):
-            for x in (i for j in (range(segment_points[0]), range(segment_points[1], len(child.path_cities))) for i in
-                      j):
-                if child[i].id == -1:
-                    child[i] = missings.pop()
+            outter_range = (i for j in (range(segment_points[0]), range(segment_points[1], len(child.path_cities))) for i in j)
+            for x in outter_range:
+                if child[x] in child[segment_points[0]:segment_points[1]]:  #check if outter range contains doublons in inner range
+                    child[x] = next(y for y in couple[0].path_cities if y not in child)     #Replace with missing
 
             self.solutions.append(child)
 
