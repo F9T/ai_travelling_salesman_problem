@@ -9,9 +9,9 @@ import random
 import functools
 from copy import deepcopy
 
-STAGNATION_TOLERANCE = 100
-MAX_TIME_ELAPSED = 10
-POPULATION_SIZE = 100
+STAGNATION_TOLERANCE = 10
+DEFAULT_MAX_TIME_ELAPSED = 10
+POPULATION_SIZE = 20
 MUTATION_RATE = 0.4
 
 
@@ -227,12 +227,14 @@ class Voyager:
             solution.mutate()
 
     def find_best_solution(self):
+        best = None
         for solution in self.solutions:
             if solution.total_distance < self.best_solution.total_distance:
-                self.best_solution = solution
+                best = solution
+        if best is not None:
+            self.best_solution = deepcopy(best)
 
-
-def ga_solve(file=None, gui=True, maxtime=MAX_TIME_ELAPSED):
+def ga_solve(file=None, gui=True, maxtime=DEFAULT_MAX_TIME_ELAPSED):
     distance = 0
     cities = []
 
@@ -252,12 +254,14 @@ def ga_solve(file=None, gui=True, maxtime=MAX_TIME_ELAPSED):
     begin_time = datetime.datetime.now()
     elapsed_time = 0
     stagnation = 0
+    best_solution = voyager.best_solution
 
-    while(elapsed_time < maxtime and elapsed_time >= 0 and stagnation < STAGNATION_TOLERANCE):
+    while(elapsed_time < maxtime and elapsed_time >= 0 and stagnation < STAGNATION_TOLERANCE*len(cities)):
         print("Generation "+str(i)+" :\n" +str(voyager))
 
         #Apply genetical algo
         voyager.apply_genetical()
+        best_solution = voyager.best_solution
 
         #Show on pygame
         if gui:
@@ -266,6 +270,9 @@ def ga_solve(file=None, gui=True, maxtime=MAX_TIME_ELAPSED):
         #Just calculate and print the time elapsed
         elapsed_time = datetime.datetime.now().second - begin_time.second
         print("Elapsed time :" + str(elapsed_time)+"\n")
+
+        if best_solution is voyager.best_solution:
+            stagnation += 1
 
         i += 1
 
@@ -296,4 +303,4 @@ def load_file(path):
     return cities
 
 if __name__ == '__main__':
-	ga_solve("data\pb005.txt", True, 5)
+	ga_solve("data\pb100.txt", True, 100)
