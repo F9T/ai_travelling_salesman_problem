@@ -3,6 +3,7 @@ from solution import Solution
 import random
 import functools
 from copy import deepcopy
+from city import City
 
 POPULATION_SIZE = 100
 MUTATION_RATE = 0.4
@@ -66,13 +67,14 @@ class Voyager:
             child = deepcopy(couple[0])
 
             #Replace inner segments cities
-            for i in range(segment_points[0], segment_points[1]):
-                #check if doubled cities outter of segment_points
-                if couple[1][i] in child[:segment_points[0]] or couple[1][i] in child[segment_points[1]:]:
-                    pos_double = child.path_cities.index(couple[1][i])  #Find the pos of the value already in the list
-                    child[pos_double] = child[i]            #Replace futur doubled value by the value at 'i' address
-
+            inner_range = range(segment_points[0], segment_points[1])
+            for i in inner_range:
                 child[i] = couple[1][i]                     #Place 2nd parent value
+
+            outter_range = (i for j in (range(segment_points[0]), range(segment_points[1], len(child.path_cities))) for i in j)
+            for x in outter_range:
+                if child[x] in child[segment_points[0]:segment_points[1]]:  #check if outter range contains doublons in inner range
+                    child[x] = next(y for y in couple[0].path_cities if y not in child)     #Replace with missing
 
             self.solutions.append(child)
 

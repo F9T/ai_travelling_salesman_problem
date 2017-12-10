@@ -18,15 +18,12 @@ class Solution:
     def __str__(self):
         text = "Solution : ["
         for city in self.path_cities:
-            text += city.id +" "
+            text += str(city.id) +" "
         text += "] Distance : " + str(self.total_distance)
         return str(text)
 
     def __eq__(self, other):
         return self.id == other.id
-
-    def __gt__(self, other):
-        pass    #TODO greater and lesser to compare for max
 
     def mutate(self):
         #Swap 2 values
