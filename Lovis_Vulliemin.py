@@ -215,14 +215,14 @@ class Voyager:
                 if couple[1][i] in child[:segment_points[0]] or couple[1][i] in child[segment_points[1]:]:
                     pos_double = child.path_cities.index(couple[1][i])
                     missings.append(child[pos_double])
-                    child[pos_double] = City(None, 0, 0)
+                    child[pos_double] = City(-1, 0, 0)
 
                 child[i] = couple[1][i]  # Place 2nd parent value
 
             # for i in range(segment_points[0])+range(segment_points[1], len(child.path_cities)):
             for x in (i for j in (range(segment_points[0]), range(segment_points[1], len(child.path_cities))) for i in
                       j):
-                if child[i] is None:
+                if child[i].id == -1:
                     child[i] = missings.pop()
 
             self.solutions.append(child)
