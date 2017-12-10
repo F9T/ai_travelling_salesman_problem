@@ -58,3 +58,26 @@ class Gui(object):
         textRect = text.get_rect()
         self.screen.blit(text, textRect)
         pygame.display.flip()
+
+    ##
+    def draw_best_path(self, population):
+        ''' Permet de dessiner sur la fenêtre la liste des genes (villes) ainsi que le meilleur chemin
+            Argument :
+            population -- La population actuelle
+        '''
+        self.window.fill(0)
+        text = self.font.render("Nombre: %i" % len(cities), True, self.font_color)
+        textRect = text.get_rect()
+        self.screen.blit(text, textRect)
+
+        for point in cities:
+            pygame.draw.rect(self.window, self.city_color, [point.x, point.y, self.city_radius, self.city_radius])
+
+        list_points = []
+        best_genes_list = population[0].genes
+        for gene in best_genes_list:
+            list_points.append((cities[gene].x, cities[gene].y))
+
+        list_points.append((cities[best_genes_list[0]].x, cities[best_genes_list[0]].y))
+        pygame.draw.lines(self.window, self.city_color, False, list_points, 1)
+        pygame.display.update()
