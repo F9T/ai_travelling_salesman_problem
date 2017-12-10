@@ -7,7 +7,7 @@ from pygame.locals import QUIT, MOUSEBUTTONDOWN, KEYDOWN, K_RETURN
 
 class Gui(object):
 
-    def __init__(self, width=500, height=500, city_color=[10, 10, 200], city_radius=3):
+    def __init__(self, width=500, height=500, city_color=[10, 10, 200], city_radius=3, line_color=[250, 50, 50]):
         self.width = width
         self.height = height
         self.window = None
@@ -16,6 +16,7 @@ class Gui(object):
         pygame.display.set_caption('Problème du voyageur de commerce')
         self.font = pygame.font.Font(None, 30)
         self.city_color = city_color
+        self.line_color = line_color
         self.city_radius = city_radius
         self.font_color = [255, 255, 255]
 
@@ -43,41 +44,34 @@ class Gui(object):
                 elif event.type == KEYDOWN and event.key == K_RETURN:
                     collecting = False
                 elif event.type == MOUSEBUTTONDOWN:
-                    city = City(len(cities), pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1])
+                    city = City("v"+str(len(cities)), pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1])
                     cities.append(city)
                     self.draw_cities(cities)
 
                 self.screen.fill(0)
         pygame.display.flip()
 
-    def draw_cities(self, cities):
+    #Draw for beggining and entering cities with GUI
+    def draw_cities(self, cities, draw_path=False):
         self.screen.fill(0)
+
+        #Show Number of city text
+        text = self.font.render("Nombre: %i" % len(cities), True, self.font_color)
+        textRect = text.get_rect()
+        self.screen.blit(text, textRect)
+
+        #Compute for path show
+        if draw_path:
+            list_points = []
+
+        #Show cities points
         for city in cities:
             pygame.draw.circle(self.screen, self.city_color, (city.x, city.y), self.city_radius)
-        text = self.font.render("Nombre: %i" % len(cities), True, self.font_color)
-        textRect = text.get_rect()
-        self.screen.blit(text, textRect)
+
+            if draw_path:
+                list_points.append((city.x, city.y))
+
+        if draw_path:
+            pygame.draw.lines(self.window, self.line_color, False, list_points, 1)
+
         pygame.display.flip()
-
-    ##
-    def draw_best_path(self, population):
-        ''' Permet de dessiner sur la fenêtre la liste des genes (villes) ainsi que le meilleur chemin
-            Argument :
-            population -- La population actuelle
-        '''
-        self.window.fill(0)
-        text = self.font.render("Nombre: %i" % len(cities), True, self.font_color)
-        textRect = text.get_rect()
-        self.screen.blit(text, textRect)
-
-        for point in cities:
-            pygame.draw.rect(self.window, self.city_color, [point.x, point.y, self.city_radius, self.city_radius])
-
-        list_points = []
-        best_genes_list = population[0].genes
-        for gene in best_genes_list:
-            list_points.append((cities[gene].x, cities[gene].y))
-
-        list_points.append((cities[best_genes_list[0]].x, cities[best_genes_list[0]].y))
-        pygame.draw.lines(self.window, self.city_color, False, list_points, 1)
-        pygame.display.update()

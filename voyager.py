@@ -14,6 +14,8 @@ class Voyager:
         for i in range(98):
             self.solutions.append(Solution(sorted(cities, key=lambda k: random.random())))
 
+        self.best_solution = self.find_best_solution()
+
     def __str__(self, debug=True):
         text = "Voyager :"
         if debug:
@@ -27,10 +29,10 @@ class Voyager:
         return self.id == other.id
 
     def apply_genetical(self):
-        self.select_solutions()
-        self.cross_over_solutions()
+        #self.select_solutions()
+        #self.cross_over_solutions()
         self.mutate_solutions()
-        self.find_best_solution()
+        self.best_solution = self.find_best_solution()
 
     def select_solutions(self):
         #Calculate median problem distance TODO
@@ -41,7 +43,7 @@ class Voyager:
 
         #Select other random to complete half of the population
         while(len(selecteds) < len(self.solutions)/2):
-            selecteds.append(self.solutions[random.randint(0, len(self.solutions))])
+            selecteds.append(self.solutions[random.randint(0, len(self.solutions)-1)])
 
         self.solutions = selecteds
 
@@ -52,7 +54,7 @@ class Voyager:
 
             #Choose segment points TODO order points
             segment_points = (random.sample(range(len(self.problem)+1), 2))
-            print(segment_points)
+            #print(segment_points)
 
             #Create child TODO check double city
             child = couple[0]
@@ -61,21 +63,14 @@ class Voyager:
                     child[i] = couple[1][i]
             self.solutions.append(child)
 
-        """
-        |---|
-        0 1 2 3 4 5
-        |A|B|C|D|E|
-        |B|E|C|D|A|
-        """
-
     def mutate_solutions(self):
         for solution in self.solutions:
             solution.mutate()
         pass
 
     def find_best_solution(self):
-        #TODO use max
-        self.best_solution = self.solutions[0]  #Just to begin
+        best_solution = self.solutions[0]  #Just to begin
         for solution in self.solutions:
-            if solution.total_distance < self.best_solution.total_distance:
-                self.best_solution = solution
+            if solution.total_distance < best_solution.total_distance:
+                best_solution = solution
+        return best_solution

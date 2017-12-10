@@ -12,10 +12,11 @@ def ga_solve(file=None, gui=True, maxtime=5):
 
     #Data acquisition
     if file is not None:
-        cities = use_file(file)
+        cities = load_file(file)
 
-    if(gui):
-        use_gui(cities)
+    if gui:
+        gui = Gui()
+        gui.show(cities)
 
     voyager = Voyager(cities)       #This is the problem holder
     print("Generation 0 :\n" + str(voyager))
@@ -25,17 +26,25 @@ def ga_solve(file=None, gui=True, maxtime=5):
     begin_time = datetime.datetime.now()
     elapsed_time = 0
 
-    while(elapsed_time < maxtime):
+    while(elapsed_time < maxtime and elapsed_time >= 0):
         print("Generation "+str(i)+" :\n" +str(voyager))
 
+        #Apply genetical algo
         voyager.apply_genetical()
 
+        #Show on pygame
+        if gui:
+            gui.draw_cities(voyager.best_solution.path_cities, True)
+
+        #Just calculate and print the time elapsed
         elapsed_time = datetime.datetime.now().second - begin_time.second
         print("Elapsed time :" + str(elapsed_time)+"\n")
 
         i += 1
 
-    #TODO get best distance and return
+    if gui:
+        gui.wait()
+
     return distance
 
 
@@ -43,7 +52,7 @@ def use_gui(cities):
     gui = Gui()
     gui.show(cities)
 
-def use_file(path):
+def load_file(path):
     cities = []
 
     with open(path) as f:
@@ -60,5 +69,4 @@ def use_file(path):
     return cities
 
 if __name__ == '__main__':
-	ga_solve("data\pb005.txt", False, 5)
-
+	ga_solve("data\pb010.txt", True, 5)
