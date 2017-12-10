@@ -35,7 +35,6 @@ def ga_solve(file=None, gui=True, maxtime=5):
 
         i += 1
 
-
     #TODO get best distance and return
     return distance
 
