@@ -1,4 +1,5 @@
 # -coding: UTF-8
+import argparse
 import pygame
 from pygame.locals import QUIT, MOUSEBUTTONDOWN, KEYDOWN, K_RETURN
 import datetime
@@ -303,4 +304,12 @@ def load_file(path):
     return cities
 
 if __name__ == '__main__':
-	ga_solve("data\pb100.txt", True, 100)
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument('--nogui')
+    parser.add_argument('--maxtime', default=60)
+    parser.add_argument('filename', nargs='?', default=None)
+
+    args = vars(parser.parse_args())
+
+    ga_solve(args['filename'], not args['nogui'], int(args['maxtime']))
